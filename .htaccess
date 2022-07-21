@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Send Requests To Public Folder...
+    RewriteRule ^(.*)$ public/$1 [QSA,L]
+</IfModule>
