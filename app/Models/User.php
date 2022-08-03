@@ -43,21 +43,10 @@ class User extends Authenticatable
         // hash it with a method and replace
         // old unhashed value with new.
         if (key_exists('password', $attributes)) {
-            $attributes['password'] = $this->hashPassword($attributes['password']);
+            $attributes['password'] = Hash::make($attributes['password']);
         }
 
         parent::__construct($attributes);
-    }
-
-    /**
-     * Returns hashed password by provided string.
-     *
-     * @param string $password
-     * @return string
-     */
-    public function hashPassword(string $password): string
-    {
-        return Hash::make($password);
     }
 
     /**
