@@ -16,7 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Routes for which there should be no authorization.
-Route::get('/', [TicketController::class, 'create'])->name('tickets.create');
+Route::get('/', function () {
+    return response()->redirectToRoute('tickets.create');
+});
+
+Route::prefix('/tickets')->name('tickets.')->group(function () {
+    Route::get('/', [TicketController::class, 'create'])->name('create');
+    Route::post('/', [TicketController::class, 'store'])->name('store');
+
+    Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
+});
 
 // Routes for which there should be authorization.
 Route::middleware('auth')->group(function () {
