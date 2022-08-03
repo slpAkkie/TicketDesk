@@ -19,7 +19,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
     ];
 
     /**
@@ -33,20 +32,16 @@ class User extends Authenticatable
     ];
 
     /**
-     * Override parent __construct method to handle password attribute.
+     * Set new password to the User.
      *
-     * @param array<string, string> $attributes
+     * @param string $password
+     * @return static
      */
-    public function __construct(array $attributes = [])
+    public function setPassword(string $password): static
     {
-        // If there is a password in attributes
-        // hash it with a method and replace
-        // old unhashed value with new.
-        if (key_exists('password', $attributes)) {
-            $attributes['password'] = Hash::make($attributes['password']);
-        }
+        $this->password = Hash::make($password);
 
-        parent::__construct($attributes);
+        return $this;
     }
 
     /**
