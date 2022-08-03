@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Routes for which there should be no authorization
+// Routes for which there should be no authorization.
 Route::get('/', [TicketController::class, 'create'])->name('tickets.create');
 
-// Routes for which there should be authorization
+// Routes for which there should be authorization.
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [TicketController::class, 'index'])->name('tickets.index');
 });
 
-// Separated routes for authorization
+// Separated routes for authorization.
 require_once 'web.partials/auth.php';

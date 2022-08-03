@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class TicketController extends Controller
+class DashboardController extends Controller
 {
     /**
-     * Show form to create a new ticket.
+     * Show dashboard.
      *
      * @param Request $request
      * @return View
      */
-    public function create(Request $request): View
+    public function dashboard(Request $request): View
     {
-        return view('tickets.create');
+        return view('dashboard');
     }
 }

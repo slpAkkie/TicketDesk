@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /**
-     * Show form for login
+     * Show form for login.
      *
      * @param Request $request
      * @return View
@@ -20,8 +20,8 @@ class LoginController extends Controller
     }
 
     /**
-     * Try to login with provided credentials
-     * ! Now it's just a redirect back to login page
+     * Try to login with provided credentials.
+     * ! Now it's just a redirect back to login page.
      *
      * @param Request $request
      * @return RedirectResponse
