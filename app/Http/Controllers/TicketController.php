@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Tickets\ShowRequest;
 use App\Http\Requests\Tickets\StoreRequest;
 use App\Models\Ticket;
 use App\Models\TicketCategory;
@@ -48,17 +49,25 @@ class TicketController extends Controller
     /**
      * Show a page with ticket conversation.
      *
-     * @param Request $request
+     * @param ShowRequest $request
      * @param Ticket $ticket
      * @return View
      */
-    public function show(Request $request, Ticket $ticket): View
+    public function show(ShowRequest $request, Ticket $ticket): View
     {
         return view('tickets.show', [
             'ticket' => $ticket,
+            'messages' => $ticket->messages()->orderBy('created_at', 'DESC')->paginate(15),
         ]);
     }
 
+    /**
+     * Close a ticket.
+     *
+     * @param Request $request
+     * @param Ticket $ticket
+     * @return RedirectResponse
+     */
     public function close(Request $request, Ticket $ticket): RedirectResponse
     {
         $ticket->close();

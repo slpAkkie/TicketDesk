@@ -33,6 +33,9 @@ class Ticket extends Model
     {
         parent::__construct($attributes);
 
+        // If there is attribute and no code for ticket
+        // then generate new code. This case probably
+        // happens when new Ticket creating only.
         if (count($attributes) && is_null($this->code)) {
             $this->code = $this->generareCode();
         }
@@ -81,6 +84,16 @@ class Ticket extends Model
     }
 
     /**
+     * Returns true if ticket closed.
+     *
+     * @return boolean
+     */
+    public function isClosed(): bool
+    {
+        return $this->status_slug === 'closed';
+    }
+
+    /**
      * Close a ticket.
      *
      * @return void
@@ -92,7 +105,7 @@ class Ticket extends Model
     }
 
     /**
-     * Category of the Ticket.
+     * Category of a Ticket.
      *
      * @return BelongsTo
      */
@@ -102,7 +115,7 @@ class Ticket extends Model
     }
 
     /**
-     * Status of the Ticket.
+     * Status of a Ticket.
      *
      * @return BelongsTo
      */
@@ -118,7 +131,7 @@ class Ticket extends Model
      */
     public function messages(): HasMany
     {
-        return $this->hasMany(TicketMessages::class, 'ticket_id', 'id');
+        return $this->hasMany(TicketMessage::class, 'ticket_id', 'id');
     }
 
     /**

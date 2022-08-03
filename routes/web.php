@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TicketMessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,8 @@ Route::prefix('/tickets')->name('tickets.')->group(function () {
     Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
 
     Route::put('/{ticket}/close', [TicketController::class, 'close'])->name('close');
+
+    Route::post('/{ticket}/messages', [TicketMessageController::class, 'store'])->name('messages.store');
 });
 
 // Routes for which there should be authorization.
