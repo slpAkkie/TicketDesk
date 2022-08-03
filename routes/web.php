@@ -25,6 +25,8 @@ Route::prefix('/tickets')->name('tickets.')->group(function () {
     Route::post('/', [TicketController::class, 'store'])->name('store');
 
     Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
+
+    Route::put('/{ticket}/close', [TicketController::class, 'close'])->name('close');
 });
 
 // Routes for which there should be authorization.

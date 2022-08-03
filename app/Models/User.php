@@ -39,14 +39,14 @@ class User extends Authenticatable
      */
     public function __construct(array $attributes = [])
     {
-        parent::__construct($attributes);
-
         // If there is a password in attributes
         // hash it with a method and replace
         // old unhashed value with new.
         if (key_exists('password', $attributes)) {
             $attributes['password'] = $this->hashPassword($attributes['password']);
         }
+
+        parent::__construct($attributes);
     }
 
     /**

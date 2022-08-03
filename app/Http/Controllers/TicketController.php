@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Tickets\StoreRequest;
 use App\Models\Ticket;
+use App\Models\TicketCategory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,7 +19,9 @@ class TicketController extends Controller
      */
     public function create(Request $request): View
     {
-        return view('tickets.create');
+        return view('tickets.create', [
+            'categories' => TicketCategory::all(),
+        ]);
     }
 
     /**
@@ -29,7 +32,17 @@ class TicketController extends Controller
      */
     public function store(StoreRequest $request): RedirectResponse
     {
-        return response()->redirectToRoute('tickets.show');
+        $ticket = new Ticket($request->only([
+            'name',
+            'email',
+            'title',
+            'category_id',
+            'description',
+        ]));
+
+        $ticket->save();
+
+        return response()->redirectToRoute('tickets.show', $ticket);
     }
 
     /**
@@ -41,8 +54,15 @@ class TicketController extends Controller
      */
     public function show(Request $request, Ticket $ticket): View
     {
-        return view('show', [
+        return view('tickets.show', [
             'ticket' => $ticket,
         ]);
+    }
+
+    public function close(Request $request, Ticket $ticket): RedirectResponse
+    {
+        $ticket->close();
+
+        return response()->redirectToRoute('tickets.show', $ticket);
     }
 }

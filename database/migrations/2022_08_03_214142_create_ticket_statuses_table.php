@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ticket_statuses', function (Blueprint $table) {
-            $table->id();
+            $table->string('slug')->primary();
             $table->string('title');
             $table->timestamps();
         });
