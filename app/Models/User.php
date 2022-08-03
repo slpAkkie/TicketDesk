@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,7 +33,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Override parent __construct method to handle password attribute
+     * Override parent __construct method to handle password attribute.
      *
      * @param array<string, string> $attributes
      */
@@ -41,15 +42,15 @@ class User extends Authenticatable
         parent::__construct($attributes);
 
         // If there is a password in attributes
-        // Hash it with a method and replace
-        // old unhashed value with recieved one
+        // hash it with a method and replace
+        // old unhashed value with new.
         if (key_exists('password', $attributes)) {
             $attributes['password'] = $this->hashPassword($attributes['password']);
         }
     }
 
     /**
-     * Returns hashed password by provided string
+     * Returns hashed password by provided string.
      *
      * @param string $password
      * @return string
@@ -57,5 +58,15 @@ class User extends Authenticatable
     public function hashPassword(string $password): string
     {
         return Hash::make($password);
+    }
+
+    /**
+     * Tickets in which user is responsible.
+     *
+     * @return HasMany
+     */
+    public function responsibleIn(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'responsible_id', 'id');
     }
 }
