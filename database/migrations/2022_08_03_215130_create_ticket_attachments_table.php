@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('ticket_attachments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('message_id')->references('id')->on('ticket_messages')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('ticket_code', 19);
+            $table->foreign('ticket_code')->references('code')->on('tickets')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('path', 255);
             $table->timestamps();
         });

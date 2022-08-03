@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->id();
-            $table->string('code', 19);
+            $table->string('code', 19)->primary();
             $table->string('name');
             $table->string('email');
             $table->string('title', 255);

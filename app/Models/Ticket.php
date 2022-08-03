@@ -13,6 +13,27 @@ use Illuminate\Support\Str;
 class Ticket extends Model
 {
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'code';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<string>
@@ -92,6 +113,10 @@ class Ticket extends Model
      */
     public function canClose(): bool
     {
+        if (is_null($this->responsible)) {
+            return false;
+        }
+
         return $this->responsible->id === Auth::id();
     }
 
@@ -143,7 +168,7 @@ class Ticket extends Model
      */
     public function messages(): HasMany
     {
-        return $this->hasMany(TicketMessage::class, 'ticket_id', 'id');
+        return $this->hasMany(TicketMessage::class, 'ticket_code', 'code');
     }
 
     /**
@@ -153,7 +178,7 @@ class Ticket extends Model
      */
     public function attachments(): HasMany
     {
-        return $this->hasMany(TicketAttachment::class, 'ticket_id', 'id');
+        return $this->hasMany(TicketAttachment::class, 'ticket_code', 'code');
     }
 
     /**
