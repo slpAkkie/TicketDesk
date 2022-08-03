@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -29,5 +30,18 @@ class LoginController extends Controller
     public function login(Request $request): RedirectResponse
     {
         return response()->redirectToRoute('login');
+    }
+
+    /**
+     * Logout user and redirect to home page for guest.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        return response()->redirectToRoute('tickets.create');
     }
 }
