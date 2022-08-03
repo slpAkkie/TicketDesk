@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class Ticket extends Model
@@ -84,6 +85,17 @@ class Ticket extends Model
     }
 
     /**
+     * Determine if user can close the ticket.
+     * TODO: Add validation (Probably use Gates)...
+     *
+     * @return boolean
+     */
+    public function canClose(): bool
+    {
+        return $this->responsible->id === Auth::id();
+    }
+
+    /**
      * Returns true if ticket closed.
      *
      * @return boolean
@@ -149,8 +161,8 @@ class Ticket extends Model
      *
      * @return BelongsTo
      */
-    public function responsilbe(): BelongsTo
+    public function responsible(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'responsilble_id', 'id');
+        return $this->belongsTo(User::class, 'responsible_id', 'id');
     }
 }

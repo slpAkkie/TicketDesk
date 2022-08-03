@@ -55,7 +55,7 @@
                     <p><b>last activity:</b> {{ $ticket->updated_at }}</p>
                     <p><b>Status:</b> {{ $ticket->status->title }}</p>
                     <div>
-                        @if (!$ticket->isClosed())
+                        @if (!$ticket->isClosed() && $ticket->canClose())
                             <form action="{{ route('tickets.close', $ticket) }}" method="post">
                                 @csrf
                                 @method('put')
