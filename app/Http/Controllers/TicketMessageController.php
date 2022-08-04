@@ -19,7 +19,7 @@ class TicketMessageController extends Controller
     {
         $ticket->messages()->create([
             'content' => $request->get('content'),
-            'user_id' => Auth::user(),
+            'user_id' => Auth::id(),
         ]);
 
         return response()->redirectToRoute('tickets.show', $ticket);
