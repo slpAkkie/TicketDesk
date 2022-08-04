@@ -40,31 +40,31 @@
         </div>
 
         {{-- Sidebar --}}
-        <div class="relative">
+        <aside class="relative">
             <div class="md:sticky top-10">
                 <div class="bg-blue-500 rounded-t-lg text-slate-50 py-2 px-4">
                     <h3 class="font-bold text-lg first-letter:uppercase">{{ $ticket->title }}</h3>
                 </div>
                 <div class="flex flex-col gap-2 bg-blue-100 rounded-b-lg border border-blue-500 py-4 px-4">
-                    <p><b>Code:</b> {{ $ticket->code }}</p>
-                    <p><b>Name:</b> {{ $ticket->name }}</p>
-                    <p><b>Email:</b> {{ $ticket->email }}</p>
-                    <p><b>Category:</b> {{ $ticket->category->title }}</p>
-                    <p><b>Description:</b> {{ $ticket->description }}</p>
-                    <p><b>Created at:</b> {{ $ticket->created_at }}</p>
-                    <p><b>last activity:</b> {{ $ticket->updated_at }}</p>
-                    <p><b>Status:</b> {{ $ticket->status->title }}</p>
-                    <div>
-                        @if (!$ticket->isClosed() && $ticket->canClose())
-                            <form action="{{ route('tickets.close', $ticket) }}" method="post">
-                                @csrf
-                                @method('put')
-                                <input type="submit" class="button" value="Close ticket">
-                            </form>
-                        @endif
-                    </div>
+                    <ul>
+                        <li><b>Code:</b> {{ $ticket->code }}</li>
+                        <li><b>Name:</b> {{ $ticket->name }}</li>
+                        <li><b>Email:</b> {{ $ticket->email }}</li>
+                        <li><b>Category:</b> {{ $ticket->category->title }}</li>
+                        <li><b>Description:</b> {{ $ticket->description }}</li>
+                        <li><b>Created at:</b> {{ $ticket->created_at }}</li>
+                        <li><b>last activity:</b> {{ $ticket->updated_at }}</li>
+                        <li><b>Status:</b> {{ $ticket->status->title }}</li>
+                    </ul>
+                    @if (!$ticket->isClosed() && $ticket->canClose())
+                        <form action="{{ route('tickets.close', $ticket) }}" method="post">
+                            @csrf
+                            @method('put')
+                            <input type="submit" class="button" value="Close ticket">
+                        </form>
+                    @endif
                 </div>
             </div>
-        </div>
+        </aside>
     </div>
 @endsection
