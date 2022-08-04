@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::prefix('/tickets')->name('tickets.')->group(function () {
     Route::get('/not-accepted', [TicketController::class, 'notAccepted'])->name('index.not-accepted');
+    Route::get('/accepted-by-me', [TicketController::class, 'acceptedByAuthUser'])->name('index.accepted-by-autorized-user');
 
     Route::get('/create', [TicketController::class, 'create'])->name('create');
     Route::post('/', [TicketController::class, 'store'])->name('store');

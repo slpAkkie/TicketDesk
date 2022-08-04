@@ -27,6 +27,19 @@ class TicketController extends Controller
     }
 
     /**
+     * Index all tickets that has been accepted by authorized user.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function acceptedByAuthUser(Request $request): View
+    {
+        return view('tickets.user-responsible', [
+            'tickets' => Ticket::acceptedBy(Auth::user())->get(),
+        ]);
+    }
+
+    /**
      * Show form to create a new ticket.
      *
      * @param Request $request

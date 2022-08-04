@@ -9,6 +9,8 @@
                 @method('put')
                 <input class="button" type="submit" value="Accept">
             </form>
+        @elseif ($t->canSee(Auth::user()))
+            <a class="button" href="{{ route('tickets.show', $t) }}">View</a>
         @endif
     </footer>
 </div>

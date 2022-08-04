@@ -121,15 +121,31 @@ class Ticket extends Model
      * Determine if user can close the ticket.
      * TODO: Add validation (Probably use Gates)...
      *
+     * @param User $user
      * @return boolean
      */
-    public function canClose(): bool
+    public function canClose(User $user = null): bool
     {
         if (is_null($this->responsible)) {
             return false;
         }
 
-        return $this->responsible->id === Auth::id();
+        return $this->responsible->id === (is_null($user) ? Auth::id() : $user->id);
+    }
+
+    /**
+     * Determine if user can see ticket.
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function canSee(User $user = null): bool
+    {
+        if (is_null($this->responsible)) {
+            return false;
+        }
+
+        return $this->responsible->id === (is_null($user) ? Auth::id() : $user->id);
     }
 
     /**
@@ -210,6 +226,20 @@ class Ticket extends Model
     public static function accepted(): Builder
     {
         return static::opened()->whereNotNull('responsible_id');
+    }
+
+    /**
+     * Returns tickets accepted by the user.
+     *
+     * @param integer|User $user
+     * @param bool $opened
+     * @return Builder
+     */
+    public static function acceptedBy(int|User $user, bool $opened = true): Builder
+    {
+        $ticketsBuilder = $opened ? static::opened() : static::closed();
+
+        return $ticketsBuilder->where('responsible_id', $user instanceof User ? $user->id : $user);
     }
 
     /**

@@ -19,7 +19,8 @@
                     <section>
                         <h3 class="font-bold text-xl">Tickets</h3>
                         <ul class="list">
-                            <li><a class="link" href="#">I'm responsible</a></li>
+                            <li><a class="link" href="{{ route('tickets.index.accepted-by-autorized-user') }}">I'm
+                                    responsible</a></li>
                             <li><a class="link" href="{{ route('tickets.index.not-accepted') }}">Waiting</a></li>
                         </ul>
                     </section>
