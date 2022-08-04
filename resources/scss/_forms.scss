@@ -8,6 +8,10 @@
 
         &-row {
             @apply flex flex-col md:items-center md:flex-row gap-4;
+
+            &_preserve-col {
+                @apply flex-row items-center;
+            }
         }
 
         &-col {

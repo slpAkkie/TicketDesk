@@ -20,7 +20,7 @@
                     <p class="mt-2 text-red-500">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="form-group form-group-row">
+            <div class="form-group form-group-row form-group-row_preserve-col">
                 <input class="input" type="checkbox" name="remember" id="remember">
                 <label for="remember">Remember me</label>
             </div>
