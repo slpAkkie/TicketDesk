@@ -13,7 +13,7 @@
                     <section>
                         <h3 class="font-bold text-xl">User</h3>
                         <ul class="list">
-                            <li><a class="link" href="#">Profile</a></li>
+                            <li><a class="link" href="{{ route('users.profile', Auth::user()) }}">Profile</a></li>
                         </ul>
                     </section>
                     @if (Auth::user()->isAdmin())
