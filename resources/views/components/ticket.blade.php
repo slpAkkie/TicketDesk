@@ -4,7 +4,7 @@
     <footer class="ticket__footer">
         <p class="ticket__created-at">Created at {{ $t->created_at }}</p>
         @if ($t->canBeAccepted())
-            <form class="mt-2" action="{{ route('tickets.accept', $t) }}" method="post">
+            <form action="{{ route('tickets.accept', $t) }}" method="post">
                 @csrf
                 @method('put')
                 <input class="button" type="submit" value="Accept">

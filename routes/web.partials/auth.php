@@ -24,6 +24,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/register', [RegisterController::class, 'page'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register'])->name('register.try');
+    Route::middleware('admin')->group(function () {
+        Route::get('/register', [RegisterController::class, 'page'])->name('register');
+        Route::post('/register', [RegisterController::class, 'register'])->name('register.try');
+    });
 });

@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Auth;
 class TicketController extends Controller
 {
     /**
+     * Index all accepted tickets.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function accepted(Request $request): View
+    {
+        return view('tickets.index', [
+            'title' => 'All accepted tickets',
+            'tickets' => Ticket::accepted()->paginate(15),
+        ]);
+    }
+
+    /**
      * Index all tickets that has no responsible.
      *
      * @param Request $request
@@ -21,8 +35,9 @@ class TicketController extends Controller
      */
     public function notAccepted(Request $request): View
     {
-        return view('tickets.not-accepted', [
-            'tickets' => Ticket::notAccepted()->get(),
+        return view('tickets.index', [
+            'title' => 'Tickets waiting to accept',
+            'tickets' => Ticket::notAccepted()->paginate(15),
         ]);
     }
 
@@ -34,8 +49,23 @@ class TicketController extends Controller
      */
     public function acceptedByAuthUser(Request $request): View
     {
-        return view('tickets.user-responsible', [
-            'tickets' => Ticket::acceptedBy(Auth::user())->get(),
+        return view('tickets.index', [
+            'title' => 'Tickets on me',
+            'tickets' => Ticket::acceptedBy(Auth::user())->paginate(15),
+        ]);
+    }
+
+    /**
+     * Index all closed tickets.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function closed(Request $request): View
+    {
+        return view('tickets.index', [
+            'title' => 'All closed tickets',
+            'tickets' => Ticket::closed()->paginate(15),
         ]);
     }
 

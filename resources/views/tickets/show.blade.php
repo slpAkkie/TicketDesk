@@ -4,7 +4,7 @@
 
 @section('content')
     {{-- Main block --}}
-    <div class="grid gap-5 grid-cols-1 md:grid-cols-[1fr_400px]">
+    <div class="grid gap-8 grid-cols-1 md:grid-cols-[1fr_400px]">
         <div class="flex flex-col gap-5 order-2 md:order-1">
             {{-- New message form --}}
             @if (!$ticket->isClosed())

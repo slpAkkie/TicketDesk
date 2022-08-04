@@ -130,7 +130,10 @@ class Ticket extends Model
             return false;
         }
 
-        return $this->responsible->id === (is_null($user) ? Auth::id() : $user->id);
+        /** @var User */
+        $user = $user ?? Auth::user();
+
+        return $user->isAdmin() || $this->responsible->id === $user->id;
     }
 
     /**
@@ -145,7 +148,10 @@ class Ticket extends Model
             return false;
         }
 
-        return $this->responsible->id === (is_null($user) ? Auth::id() : $user->id);
+        /** @var User */
+        $user = $user ?? Auth::user();
+
+        return $user->isAdmin() || $this->responsible->id === $user->id;
     }
 
     /**
