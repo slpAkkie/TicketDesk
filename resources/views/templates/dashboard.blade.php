@@ -16,12 +16,26 @@
                             <li><a class="link" href="#">Profile</a></li>
                         </ul>
                     </section>
+                    @if (Auth::user()->isAdmin())
+                        <section>
+                            <h3 class="font-bold text-xl">Admin</h3>
+                            <ul class="list">
+                                <li><a class="link" href="#">Create user</a></li>
+                            </ul>
+                        </section>
+                    @endif
                     <section>
                         <h3 class="font-bold text-xl">Tickets</h3>
                         <ul class="list">
                             <li><a class="link" href="{{ route('tickets.index.accepted-by-autorized-user') }}">I'm
                                     responsible</a></li>
                             <li><a class="link" href="{{ route('tickets.index.not-accepted') }}">Waiting</a></li>
+
+                            @if (Auth::user()->isAdmin())
+                                <li><a class="link" href="{{ route('tickets.index.all-accepted') }}">All accepted
+                                        tickets</a></li>
+                                <li><a class="link" href="{{ route('tickets.index.closed') }}">Closed tickets</a></li>
+                            @endif
                         </ul>
                     </section>
                 </div>

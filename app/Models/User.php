@@ -32,6 +32,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'admin' => 'boolean',
+        'super' => 'boolean',
+    ];
+
+    /**
      * Set new password to the User.
      *
      * @param string $password
@@ -42,6 +52,26 @@ class User extends Authenticatable
         $this->password = Hash::make($password);
 
         return $this;
+    }
+
+    /**
+     * Determine if the user has admin rights.
+     *
+     * @return boolean
+     */
+    public function isAdmin(): bool
+    {
+        return $this->admin || $this->super;
+    }
+
+    /**
+     * Determine if the user has super access rights.
+     *
+     * @return boolean
+     */
+    public function isSuper(): bool
+    {
+        return $this->super;
     }
 
     /**

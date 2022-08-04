@@ -17,7 +17,7 @@ class RegisterController extends Controller
      */
     public function page(Request $request): View
     {
-        return view('auth.create');
+        return view('admin.register');
     }
 
     /**

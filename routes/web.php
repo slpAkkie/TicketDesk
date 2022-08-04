@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/tickets')->name('tickets.')->group(function () {
         Route::get('/not-accepted', [TicketController::class, 'notAccepted'])->name('index.not-accepted');
         Route::get('/accepted-by-me', [TicketController::class, 'acceptedByAuthUser'])->name('index.accepted-by-autorized-user');
+        Route::middleware('admin')->get('/accepted', [TicketController::class, 'accepted'])->name('index.all-accepted');
+        Route::middleware('admin')->get('/closed', [TicketController::class, 'closed'])->name('index.closed');
 
         Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
         Route::put('/{ticket}/accept', [TicketController::class, 'accept'])->name('accept');

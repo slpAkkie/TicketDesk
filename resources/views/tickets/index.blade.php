@@ -1,6 +1,6 @@
 @extends('templates.dashboard')
 
-@section('title', 'Ticket accepted by me')
+@section('title', isset($title) ? $title : null)
 
 @section('main-content')
     <x-ticket-listing :tickets="$tickets" />
