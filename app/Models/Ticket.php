@@ -133,7 +133,7 @@ class Ticket extends Model
         /** @var User */
         $user = $user ?? Auth::user();
 
-        return $user->isAdmin() || $this->responsible->id === $user->id;
+        return $user && ($user->isAdmin() || $this->responsible->id === $user->id);
     }
 
     /**
