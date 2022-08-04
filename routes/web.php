@@ -25,6 +25,9 @@ Route::get('/', function () {
 Route::prefix('/tickets')->name('tickets.')->group(function () {
     Route::get('/create', [TicketController::class, 'create'])->name('create');
     Route::post('/', [TicketController::class, 'store'])->name('store');
+
+    Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
+    Route::post('/{ticket}/messages', [TicketMessageController::class, 'store'])->name('messages.store');
 });
 
 // Routes for which there should be authorization.
@@ -37,10 +40,8 @@ Route::middleware('auth')->group(function () {
         Route::middleware('admin')->get('/accepted', [TicketController::class, 'accepted'])->name('index.all-accepted');
         Route::middleware('admin')->get('/closed', [TicketController::class, 'closed'])->name('index.closed');
 
-        Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
         Route::put('/{ticket}/accept', [TicketController::class, 'accept'])->name('accept');
         Route::put('/{ticket}/close', [TicketController::class, 'close'])->name('close');
-        Route::post('/{ticket}/messages', [TicketMessageController::class, 'store'])->name('messages.store');
     });
 
     Route::prefix('/users')->name('users.')->group(function () {

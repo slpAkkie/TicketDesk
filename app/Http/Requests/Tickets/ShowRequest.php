@@ -15,7 +15,7 @@ class ShowRequest extends FormRequest
      */
     public function authorize()
     {
-        if (!Auth::user()) {
+        if (is_null(Auth::user())) {
             return true;
         }
 
