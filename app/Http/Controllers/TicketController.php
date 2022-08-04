@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Tickets\AttachRequest;
 use App\Http\Requests\Tickets\ShowRequest;
 use App\Http\Requests\Tickets\StoreRequest;
 use App\Models\Ticket;
@@ -9,6 +10,7 @@ use App\Models\TicketCategory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
@@ -104,6 +106,31 @@ class TicketController extends Controller
     }
 
     /**
+     * Attach a file to the ticket.
+     *
+     * @param AttachRequest $request
+     * @param Ticket $ticket
+     * @return RedirectResponse
+     */
+    public function attach(AttachRequest $request, Ticket $ticket): RedirectResponse
+    {
+        /** @var array<UploadedFile> */
+        $files = $request->file('attachments');
+        $attachments = [];
+
+        foreach ($files as $file) {
+            $attachments[] = [
+                'name' => $file->getClientOriginalName(),
+                'path' => $file->storePublicly('ticketAttachments/' . $ticket->code),
+            ];
+        }
+
+        $ticket->attachments()->createMany($attachments);
+
+        return back();
+    }
+
+    /**
      * Show a page with ticket conversation.
      *
      * @param ShowRequest $request
@@ -115,6 +142,7 @@ class TicketController extends Controller
         return view('tickets.show', [
             'ticket' => $ticket,
             'messages' => $ticket->messages()->orderBy('created_at', 'DESC')->paginate(15),
+            'attachments' => $ticket->attachments()->orderBy('created_at', 'DESC')->get(),
         ]);
     }
 

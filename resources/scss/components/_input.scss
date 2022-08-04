@@ -5,4 +5,12 @@
         focus:border-blue-500
         focus-within:border-blue-500
         focus:ring-blue-500;
+
+    &_file {
+        @apply input cursor-pointer focus:ring-0 focus:outline-none;
+
+        &::-webkit-file-upload-button {
+            @apply button border-0 mr-4;
+        }
+    }
 }
