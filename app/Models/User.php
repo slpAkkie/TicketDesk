@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
@@ -72,6 +74,26 @@ class User extends Authenticatable
     public function isSuper(): bool
     {
         return $this->super;
+    }
+
+    /**
+     * Returns all users, except authorized one.
+     *
+     * @return Builder
+     */
+    public static function allExceptAuth(): Builder
+    {
+        return static::where('id', '!=', Auth::id());
+    }
+
+    /**
+     * Returns all not an admins, except authorized one.
+     *
+     * @return Builder
+     */
+    public static function notAdmins(): Builder
+    {
+        return static::where('admin', false)->where('id', '!=', Auth::id());
     }
 
     /**

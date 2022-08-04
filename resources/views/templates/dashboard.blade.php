@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class="grid gap-5 grid-cols-1 md:grid-cols-[350px_1fr]">
+    <div class="grid gap-8 grid-cols-1 md:grid-cols-[350px_1fr]">
         <aside class="relative">
             <div class="md:sticky top-10">
                 <div class="bg-blue-500 rounded-t-lg text-slate-50 py-2 px-4">
@@ -20,7 +20,8 @@
                         <section>
                             <h3 class="font-bold text-xl">Admin</h3>
                             <ul class="list">
-                                <li><a class="link" href="#">Create user</a></li>
+                                <li><a class="link" href="{{ route('register') }}">Create user</a></li>
+                                <li><a class="link" href="{{ route('users.index') }}">Users</a></li>
                             </ul>
                         </section>
                     @endif

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketMessageController;
@@ -40,6 +41,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/{ticket}/accept', [TicketController::class, 'accept'])->name('accept');
         Route::put('/{ticket}/close', [TicketController::class, 'close'])->name('close');
         Route::post('/{ticket}/messages', [TicketMessageController::class, 'store'])->name('messages.store');
+    });
+
+    Route::prefix('/users')->name('users.')->group(function () {
+        Route::get('/', [AdminController::class, 'users'])->name('index');
     });
 });
 

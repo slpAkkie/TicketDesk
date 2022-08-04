@@ -8,7 +8,6 @@ class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     * TODO: Only admin or superuser can register new users.
      *
      * @return bool
      */
@@ -25,7 +24,9 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            // TODO: Registration validation...
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:8',
         ];
     }
 }
