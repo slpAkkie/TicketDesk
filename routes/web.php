@@ -17,19 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Routes for which there should be no authorization.
-Route::get('/', function () {
-    return response()->redirectToRoute('tickets.create');
-});
-
-Route::prefix('/tickets')->name('tickets.')->group(function () {
-    Route::get('/create', [TicketController::class, 'create'])->name('create');
-    Route::post('/', [TicketController::class, 'store'])->name('store');
-
-    Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
-    Route::post('/{ticket}/messages', [TicketMessageController::class, 'store'])->name('messages.store');
-});
-
 // Routes for which there should be authorization.
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -47,6 +34,19 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/users')->name('users.')->group(function () {
         Route::get('/', [AdminController::class, 'users'])->name('index');
     });
+});
+
+// Routes for which there should be no authorization.
+Route::get('/', function () {
+    return response()->redirectToRoute('tickets.create');
+});
+
+Route::prefix('/tickets')->name('tickets.')->group(function () {
+    Route::get('/create', [TicketController::class, 'create'])->name('create');
+    Route::post('/', [TicketController::class, 'store'])->name('store');
+
+    Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
+    Route::post('/{ticket}/messages', [TicketMessageController::class, 'store'])->name('messages.store');
 });
 
 // Separated routes for authorization.

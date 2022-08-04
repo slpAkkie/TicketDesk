@@ -8,4 +8,4 @@ Alexandr Shamanin (@slpAkkie)
 
 ## Version
 
-1.1.1-alpha
+1.1.2-alpha
