@@ -4,12 +4,12 @@
             <h1 class="font-bold text-2xl"><a
                     href="{{ !is_null(auth()->user()) ? route('dashboard') : route('tickets.create') }}">{{ config('app.name') }}</a>
             </h1>
-            <div class="flex gap-4 items-center uppercase hover:underline">
+            <div class="flex gap-4 items-center uppercase">
                 @auth
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
-                    <a href="{{ route('logout') }}">Logout</a>
+                    <a class="link" href="{{ route('dashboard') }}">Dashboard</a>
+                    <a class="link" href="{{ route('logout') }}">Logout</a>
                 @else
-                    <a href="{{ route('login') }}">Login</a>
+                    <a class="link" href="{{ route('login') }}">Login</a>
                 @endauth
             </div>
         </div>

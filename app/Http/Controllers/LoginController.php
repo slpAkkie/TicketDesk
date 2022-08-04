@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,14 +23,24 @@ class LoginController extends Controller
 
     /**
      * Try to login with provided credentials.
-     * ! Now it's just a redirect back to login page.
      *
-     * @param Request $request
+     * @param LoginRequest $request
      * @return RedirectResponse
      */
-    public function login(Request $request): RedirectResponse
+    public function login(LoginRequest $request): RedirectResponse
     {
-        return response()->redirectToRoute('login');
+        $authorized = Auth::attempt($request->only([
+            'email',
+            'password',
+        ]), !!$request->get('remember'));
+
+        if (!$authorized) {
+            return back()->withErrors([
+                'email' => 'No such user with provided email and password',
+            ]);
+        }
+
+        return response()->redirectToRoute('dashboard');
     }
 
     /**

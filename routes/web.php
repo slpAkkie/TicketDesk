@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('/tickets')->name('tickets.')->group(function () {
-    Route::get('/', [TicketController::class, 'create'])->name('create');
+    Route::get('/create', [TicketController::class, 'create'])->name('create');
     Route::post('/', [TicketController::class, 'store'])->name('store');
 
     Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
