@@ -64,6 +64,32 @@
                         </form>
                     @endif
                 </div>
+                <div class="mt-4">
+                    <h2 class="font-bold text-xl">Attachments</h2>
+                    <div class="flex flex-col gap-2">
+                        <ul class="list">
+                            @foreach ($attachments as $attachment)
+                                <li>
+                                    <a class="link" href="{{ asset('storage/' . $attachment->path) }}"
+                                        target="_blank">{{ $attachment->name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <form class="mt-2" action="#" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
+                        <div class="form-group">
+                            <input class="input_file" type="file" name="attachments[]" id="attachments" multiple>
+                            <p class="text-red-500">
+                                @error('attachments')
+                                    {{ $message }}
+                                @enderror
+                            </p>
+                            <input class="button mt-2" type="submit" value="Attach">
+                        </div>
+                    </form>
+                </div>
             </div>
         </aside>
     </div>

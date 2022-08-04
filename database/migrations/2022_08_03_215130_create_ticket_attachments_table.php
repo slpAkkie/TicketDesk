@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('ticket_code', 19);
             $table->foreign('ticket_code')->references('code')->on('tickets')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('name', 255);
             $table->string('path', 255);
             $table->timestamps();
         });

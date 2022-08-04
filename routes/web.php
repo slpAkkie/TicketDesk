@@ -49,6 +49,7 @@ Route::prefix('/tickets')->name('tickets.')->group(function () {
 
     Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
     Route::post('/{ticket}/messages', [TicketMessageController::class, 'store'])->name('messages.store');
+    Route::put('/{ticket}', [TicketController::class, 'attach'])->name('attach');
 });
 
 // Separated routes for authorization.
