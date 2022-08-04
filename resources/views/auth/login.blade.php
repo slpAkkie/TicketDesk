@@ -14,7 +14,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="password" class="form-label">Your email:</label>
+                <label for="password" class="form-label">Your password:</label>
                 <input class="input" type="password" name="password" id="password" placeholder="You password...">
                 @error('password')
                     <p class="mt-2 text-red-500">{{ $message }}</p>
