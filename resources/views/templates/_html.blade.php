@@ -19,7 +19,7 @@
     <title>{{ config('app.name') }} - @yield('title', 'Ticket feedback system')</title>
 </head>
 
-<body class="antialiased min-h-screen bg-sky-50">
+<body class="antialiased min-h-screen bg-blue-50">
     @yield('body')
 </body>
 

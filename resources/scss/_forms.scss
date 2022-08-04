@@ -1,0 +1,25 @@
+.form {
+    &-group {
+        @apply flex flex-col;
+
+        &+& {
+            @apply mt-4;
+        }
+
+        &-row {
+            @apply flex flex-col md:items-center md:flex-row gap-4;
+
+            &_preserve-col {
+                @apply flex-row items-center;
+            }
+        }
+
+        &-col {
+            @apply w-full form-group;
+        }
+    }
+
+    &-label {
+        @apply font-bold;
+    }
+}

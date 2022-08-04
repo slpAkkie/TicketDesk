@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -21,13 +23,36 @@ class LoginController extends Controller
 
     /**
      * Try to login with provided credentials.
-     * ! Now it's just a redirect back to login page.
+     *
+     * @param LoginRequest $request
+     * @return RedirectResponse
+     */
+    public function login(LoginRequest $request): RedirectResponse
+    {
+        $authorized = Auth::attempt($request->only([
+            'email',
+            'password',
+        ]), !!$request->get('remember'));
+
+        if (!$authorized) {
+            return back()->withErrors([
+                'email' => 'No such user with provided email and password',
+            ]);
+        }
+
+        return response()->redirectToRoute('dashboard');
+    }
+
+    /**
+     * Logout user and redirect to home page for guest.
      *
      * @param Request $request
      * @return RedirectResponse
      */
-    public function login(Request $request): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
-        return response()->redirectToRoute('login');
+        Auth::logout();
+
+        return response()->redirectToRoute('tickets.create');
     }
 }

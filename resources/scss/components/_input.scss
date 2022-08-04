@@ -1,0 +1,8 @@
+.input {
+    @apply
+        rounded
+        border-blue-300
+        focus:border-blue-500
+        focus-within:border-blue-500
+        focus:ring-blue-500;
+}

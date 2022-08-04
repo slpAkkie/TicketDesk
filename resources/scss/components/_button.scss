@@ -1,0 +1,12 @@
+.button {
+    @apply
+        inline-block
+        rounded
+        bg-blue-600
+        hover:bg-blue-700
+        font-bold
+        text-slate-50
+        px-4 py-2
+        cursor-pointer;
+
+}

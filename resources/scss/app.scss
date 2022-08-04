@@ -1,7 +1,13 @@
-// General imports
-@import './fonts';
-
 // Tailwind
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// General imports
+@import './fonts';
+@import './forms';
+@import './components/button';
+@import './components/input';
+@import './components/link';
+@import './components/list';
+@import './components/ticket';
