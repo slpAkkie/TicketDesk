@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -84,6 +86,16 @@ class Ticket extends Model
     }
 
     /**
+     * Returns a short version of description with ellipses.
+     *
+     * @return string
+     */
+    public function shortDescription(): string
+    {
+        return Str::limit($this->description, 32, '...');
+    }
+
+    /**
      * Generate unique code for ticket.
      *
      * @return string
@@ -139,6 +151,75 @@ class Ticket extends Model
     {
         $this->status_slug = 'closed';
         $this->save();
+    }
+
+    /**
+     * Returns opened tickets.
+     *
+     * @return Builder
+     */
+    public static function opened(): Builder
+    {
+        return static::whereNot('status_slug', 'closed');
+    }
+
+    /**
+     * Returns closed tickets.
+     *
+     * @return Builder
+     */
+    public static function closed(): Builder
+    {
+        return static::where('status_slug', 'closed');
+    }
+
+    /**
+     * Returns true if ticket can be accepted by user.
+     *
+     * @return boolean
+     */
+    public function canBeAccepted(): bool
+    {
+        return !$this->isClosed() && $this->responsible_id === null;
+    }
+
+    /**
+     * Accept a ticket to the user.
+     *
+     * @param integer|User $user
+     * @return void
+     */
+    public function accept(int|User $user): void
+    {
+        $responsible_id = $user;
+
+        if ($user instanceof User) {
+            $responsible_id = $user->id;
+        }
+
+        $this->responsible_id = $responsible_id;
+
+        $this->save();
+    }
+
+    /**
+     * Returns accepted and not closed tickets.
+     *
+     * @return Builder
+     */
+    public static function accepted(): Builder
+    {
+        return static::opened()->whereNotNull('responsible_id');
+    }
+
+    /**
+     * Returns not accepted tickets.
+     *
+     * @return Builder
+     */
+    public static function notAccepted(): Builder
+    {
+        return static::opened()->whereNull('responsible_id');
     }
 
     /**

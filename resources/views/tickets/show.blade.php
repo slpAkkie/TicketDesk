@@ -5,7 +5,7 @@
 @section('content')
     {{-- Main block --}}
     <div class="grid gap-5 grid-cols-1 md:grid-cols-[1fr_400px]">
-        <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-5 order-2 md:order-1">
             {{-- New message form --}}
             @if (!$ticket->isClosed())
                 <form action="{{ route('tickets.messages.store', $ticket) }}" method="post"
@@ -40,7 +40,7 @@
         </div>
 
         {{-- Sidebar --}}
-        <aside class="relative">
+        <aside class="relative order-1 md:order-2">
             <div class="md:sticky top-10">
                 <div class="bg-blue-500 rounded-t-lg text-slate-50 py-2 px-4">
                     <h3 class="font-bold text-lg first-letter:uppercase">{{ $ticket->title }}</h3>

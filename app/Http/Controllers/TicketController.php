@@ -9,9 +9,23 @@ use App\Models\TicketCategory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
+    /**
+     * Index all tickets that has no responsible.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function notAccepted(Request $request): View
+    {
+        return view('tickets.not-accepted', [
+            'tickets' => Ticket::notAccepted()->get(),
+        ]);
+    }
+
     /**
      * Show form to create a new ticket.
      *
@@ -59,6 +73,20 @@ class TicketController extends Controller
             'ticket' => $ticket,
             'messages' => $ticket->messages()->orderBy('created_at', 'DESC')->paginate(15),
         ]);
+    }
+
+    /**
+     * Accept ticket by authorized user.
+     *
+     * @param Ticket $ticket
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function accept(Request $request, Ticket $ticket): RedirectResponse
+    {
+        $ticket->accept(Auth::user());
+
+        return response()->redirectToRoute('tickets.show', $ticket);
     }
 
     /**
