@@ -1,11 +1,11 @@
-## TicketDesk
+# TicketDesk
 
-Ticket feedback system for companies.
+Система тикетов для обратной связи в компаниях
 
-## Author
+## Автор
 
 Alexandr Shamanin (@slpAkkie)
 
-## Version
+## Версия
 
 1.2.1-alpha
